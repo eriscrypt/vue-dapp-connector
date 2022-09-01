@@ -1,9 +1,11 @@
 {
   "name": "eriscrypt-connector-plugin",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Connect WEB3 providers for any apps",
   "main": "dist/index.js",
-  "files": ["dist/**/*"],
+  "files": [
+    "dist/**/*"
+  ],
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -18,7 +20,8 @@
     "web3-auth",
     "vue",
     "react",
-    "typescript"
+    "typescript",
+    "ethers"
   ],
   "author": "Ernest Isaev",
   "license": "MIT",

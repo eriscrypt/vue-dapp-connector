@@ -1,4 +1,5 @@
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
+// @ts-ignore
 import WalletConnect from "@walletconnect/web3-provider/dist/umd/index.min.js";
 
 const INFURA_ID = "3ff38b400e4a4593af89997fde20c30e";
@@ -7,7 +8,7 @@ export default {
   coinbasewallet: {
     package: CoinbaseWalletSDK,
     options: {
-      appName: "Web 3 Modal Demo",
+      appName: "Web3 Connector",
       infuraId: INFURA_ID,
     },
   },
