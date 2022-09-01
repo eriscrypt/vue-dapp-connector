@@ -4,6 +4,20 @@ import WalletConnect from "@walletconnect/web3-provider/dist/umd/index.min.js";
 
 const INFURA_ID = "3ff38b400e4a4593af89997fde20c30e";
 
+export interface IWallet {
+  address: string;
+  balance: string;
+}
+export interface INetwork {
+  name: string;
+  token: string;
+  valid: boolean;
+}
+export interface ConnectorResponse {
+  wallet: IWallet;
+  network: INetwork;
+}
+
 export default {
   coinbasewallet: {
     package: CoinbaseWalletSDK,

@@ -1,10 +1,9 @@
 import { ref } from "vue";
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
-import config from "./config";
+import config, { ConnectorResponse } from "./config";
 import Wallet from "./Wallet";
 import Network from "./Network";
-import { ConnectorResponse } from "./types";
 
 export class Connector {
   private instance: any;
