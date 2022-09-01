@@ -32,17 +32,70 @@ export class Connector {
   connect = async (): Promise<ConnectorResponse> => {
     this.instance = await this.modal.connect();
     this.provider = this.getProvider();
+
     this.walletService = new Wallet(this.provider);
     this.networkService = new Network(this.provider);
     this.isAuthenticated.value = true;
 
     await this.walletService.requestBalance();
+    this.registerEvents();
 
     return new Promise((resolve) => {
       resolve({
         wallet: this.walletService.getWallet(),
         network: this.networkService.getNetwork(),
       });
+    });
+  };
+
+  on = (event: string, callback: (e: ConnectorResponse) => void) => {
+    window.addEventListener(event, (e: any) => {
+      callback(e.detail);
+    });
+  };
+
+  private registerEvents = () => {
+    this.provider.provider.on("chainChanged", async () => {
+      await this.update();
+      window.dispatchEvent(await this.generateEventDetail("chain-changed"));
+    });
+
+    this.provider.provider.on("accountsChanged", async (accounts: []) => {
+      if (!accounts.length) {
+        await this.disconnect();
+        return window.dispatchEvent(await this.generateDisconnectEvent());
+      }
+
+      await this.update();
+      return window.dispatchEvent(
+        await this.generateEventDetail("accounts-changed")
+      );
+    });
+
+    this.provider.provider.on("disconnect", async () => {
+      return window.dispatchEvent(await this.generateDisconnectEvent());
+    });
+  };
+
+  private update = async () => {
+    this.provider = await this.getProvider();
+    this.networkService = new Network(this.provider);
+    this.walletService = new Wallet(this.provider);
+    await this.walletService.requestBalance();
+  };
+
+  private generateEventDetail = async (eventName: string) => {
+    return new CustomEvent(eventName, {
+      detail: {
+        wallet: this.walletService.getWallet(),
+        network: this.networkService.getNetwork(),
+      },
+    });
+  };
+
+  private generateDisconnectEvent = () => {
+    return new CustomEvent("disconnected", {
+      detail: {},
     });
   };
 
