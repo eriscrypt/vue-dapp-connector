@@ -5,7 +5,7 @@
 ```typescript
 import { createApp } from "vue";
 import App from "./App.vue";
-import { Connector } from "../../connector-plugin/src";
+import { Connector } from "eriscrypt-connector-plugin";
 
 const app = createApp(App);
 const connector = new Connector();
