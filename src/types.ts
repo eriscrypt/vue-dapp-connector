@@ -13,6 +13,35 @@ export interface INetwork {
   token: string;
   valid: boolean;
 }
+
+export const CHAINS = {
+  ETH: {
+    id: 1,
+    name: "Ethereum Mainnet",
+    symbol: "ETH",
+  },
+  BSC: {
+    id: 56,
+    name: "Binance Smart Chain",
+    symbol: "BNB",
+  },
+  RINKEBY: {
+    id: 4,
+    name: "Rinkeby Testnet",
+    symbol: "ETH",
+  },
+  FTM: {
+    id: 250,
+    name: "Fantom Opera",
+    symbol: "FTM",
+  },
+  POLYGON: {
+    id: 137,
+    name: "Polygon",
+    symbol: "MATIC",
+  },
+};
+
 export interface ConnectorResponse {
   wallet: IWallet;
   network: INetwork;

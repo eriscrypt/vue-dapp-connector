@@ -1,9 +1,16 @@
 import { ref } from "vue";
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
-import config, { ConnectorResponse } from "./config";
+import config, { ConnectorResponse } from "./types";
 import Wallet from "./Wallet";
 import Network from "./Network";
+
+export enum EVENTS {
+  CHAIN_CHANGED = "chain-changed",
+  ACCOUNTS_CHANGED = "accounts-changed",
+  DISCONNECTED = "disconnected",
+  UPDATED = "updated",
+}
 
 export class Connector {
   private instance: any;
@@ -48,7 +55,7 @@ export class Connector {
     });
   };
 
-  on = (event: string, callback: (e: ConnectorResponse) => void) => {
+  on = (event: EVENTS | string, callback: (e: ConnectorResponse) => void) => {
     window.addEventListener(event, (e: any) => {
       callback(e.detail);
     });
@@ -57,7 +64,9 @@ export class Connector {
   private registerEvents = () => {
     this.provider.provider.on("chainChanged", async () => {
       await this.update();
-      window.dispatchEvent(await this.generateEventDetail("chain-changed"));
+      window.dispatchEvent(
+        await this.generateEventDetail(EVENTS.CHAIN_CHANGED)
+      );
     });
 
     this.provider.provider.on("accountsChanged", async (accounts: []) => {
@@ -68,20 +77,24 @@ export class Connector {
 
       await this.update();
       return window.dispatchEvent(
-        await this.generateEventDetail("accounts-changed")
+        await this.generateEventDetail(EVENTS.ACCOUNTS_CHANGED)
       );
     });
 
     this.provider.provider.on("disconnect", async () => {
+      await this.disconnect();
       return window.dispatchEvent(await this.generateDisconnectEvent());
     });
   };
 
-  private update = async () => {
+  public update = async () => {
     this.provider = await this.getProvider();
     this.networkService = new Network(this.provider);
     this.walletService = new Wallet(this.provider);
     await this.walletService.requestBalance();
+
+    const event = this.generateUpdateEvent();
+    return window.dispatchEvent(event);
   };
 
   private generateEventDetail = async (eventName: string) => {
@@ -94,8 +107,17 @@ export class Connector {
   };
 
   private generateDisconnectEvent = () => {
-    return new CustomEvent("disconnected", {
+    return new CustomEvent(EVENTS.DISCONNECTED, {
       detail: {},
+    });
+  };
+
+  private generateUpdateEvent = () => {
+    return new CustomEvent(EVENTS.UPDATED, {
+      detail: {
+        wallet: this.walletService.getWallet(),
+        network: this.networkService.getNetwork(),
+      },
     });
   };
 
