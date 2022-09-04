@@ -115,5 +115,6 @@ export class Connector {
   disconnect = async () => {
     this.isAuthenticated.value = false;
     this.modal.clearCachedProvider();
+    window.dispatchEvent(await this.generateDisconnectEvent())
   };
 }
