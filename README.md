@@ -1,5 +1,5 @@
-# Web3 Modal
-#### Connect any web application to any Web3 provider! 🤓
+# Vue Web3 Modal
+#### Connect any VUE application to any Web3 provider! 🤓
 
 ## Vue3 / Typescript / Pinia Usage
 ```typescript

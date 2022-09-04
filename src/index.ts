@@ -38,13 +38,9 @@ export class Connector {
 
   connect = async (): Promise<ConnectorResponse> => {
     this.instance = await this.modal.connect();
-    this.provider = this.getProvider();
+    await this.update();
 
-    this.walletService = new Wallet(this.provider);
-    this.networkService = new Network(this.provider);
     this.isAuthenticated.value = true;
-
-    await this.walletService.requestBalance();
     this.registerEvents();
 
     return new Promise((resolve) => {
@@ -76,6 +72,7 @@ export class Connector {
       }
 
       await this.update();
+
       return window.dispatchEvent(
         await this.generateEventDetail(EVENTS.ACCOUNTS_CHANGED)
       );
@@ -93,8 +90,7 @@ export class Connector {
     this.walletService = new Wallet(this.provider);
     await this.walletService.requestBalance();
 
-    const event = this.generateUpdateEvent();
-    return window.dispatchEvent(event);
+    return window.dispatchEvent(await this.generateEventDetail(EVENTS.UPDATED));
   };
 
   private generateEventDetail = async (eventName: string) => {
@@ -109,15 +105,6 @@ export class Connector {
   private generateDisconnectEvent = () => {
     return new CustomEvent(EVENTS.DISCONNECTED, {
       detail: {},
-    });
-  };
-
-  private generateUpdateEvent = () => {
-    return new CustomEvent(EVENTS.UPDATED, {
-      detail: {
-        wallet: this.walletService.getWallet(),
-        network: this.networkService.getNetwork(),
-      },
     });
   };
 
