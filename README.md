@@ -40,14 +40,14 @@ connector.on(EVENTS.UPDATED, (data) => {
 
 ## Types
 ```typescript
-import { ConnectorResponse, IWallet, INetwork } from "eriscrypt-connector-plugin/types";
+import { ConnectorResponse, IWallet, INetwork } from "eriscrypt-connector-plugin/dist/types";
 ```
 
 ## Events
 
 ```typescript
 import { Connector, EVENTS } from "eriscrypt-connector-plugin";
-import { ConnectorResponse } from 'eriscrypt-connector-plugin/types'
+import { ConnectorResponse } from 'eriscrypt-connector-plugin/dist/types'
 
 const connector = new Connector();
 
@@ -73,7 +73,7 @@ connector.on(EVENTS.UPDATED, (data: ConnectorResponse) => {
 
 ## Chains / Networks
 ```typescript
-import { CHAINS } from 'eriscrypt-connector-plugin/types';
+import { CHAINS } from 'eriscrypt-connector-plugin/dist/types';
 
 /**
  * Supported chains
