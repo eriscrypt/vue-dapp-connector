@@ -1,6 +1,6 @@
 {
   "name": "eriscrypt-connector-plugin",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "Connect WEB3 providers for any apps",
   "main": "dist/index.js",
   "files": [

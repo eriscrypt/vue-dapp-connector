@@ -38,16 +38,13 @@ export class Connector {
 
   connect = async (): Promise<ConnectorResponse> => {
     this.instance = await this.modal.connect();
-    await this.update();
-
     this.isAuthenticated.value = true;
+
+    await this.init();
     this.registerEvents();
 
     return new Promise((resolve) => {
-      resolve({
-        wallet: this.walletService.getWallet(),
-        network: this.networkService.getNetwork(),
-      });
+      resolve(this.generateDetail());
     });
   };
 
@@ -67,54 +64,57 @@ export class Connector {
 
     this.provider.provider.on("accountsChanged", async (accounts: []) => {
       if (!accounts.length) {
-        await this.disconnect();
-        return window.dispatchEvent(await this.generateDisconnectEvent());
+        return await this.disconnect();
+      } else {
+        await this.update();
+        return window.dispatchEvent(
+          await this.generateEventDetail(EVENTS.ACCOUNTS_CHANGED)
+        );
       }
-
-      await this.update();
-
-      return window.dispatchEvent(
-        await this.generateEventDetail(EVENTS.ACCOUNTS_CHANGED)
-      );
     });
 
     this.provider.provider.on("disconnect", async () => {
-      await this.disconnect();
-      return window.dispatchEvent(await this.generateDisconnectEvent());
+      return await this.disconnect();
     });
+  };
+
+  private init = async () => {
+    this.provider = await this.getProvider();
+    this.walletService = new Wallet(this.provider);
+    this.networkService = new Network(this.provider);
+    await this.walletService.requestBalance();
   };
 
   public update = async () => {
-    this.provider = await this.getProvider();
-    this.networkService = new Network(this.provider);
-    this.walletService = new Wallet(this.provider);
-    await this.walletService.requestBalance();
-
+    await this.init();
     return window.dispatchEvent(await this.generateEventDetail(EVENTS.UPDATED));
   };
 
-  private generateEventDetail = async (eventName: string) => {
-    return new CustomEvent(eventName, {
-      detail: {
-        wallet: this.walletService.getWallet(),
-        network: this.networkService.getNetwork(),
-      },
-    });
-  };
-
-  private generateDisconnectEvent = () => {
-    return new CustomEvent(EVENTS.DISCONNECTED, {
-      detail: {},
-    });
-  };
-
-  getProvider = () => {
+  public getProvider = () => {
     return new ethers.providers.Web3Provider(this.instance);
+  };
+
+  private generateEventDetail = async (
+    eventName: string,
+    needDetail: boolean = true
+  ) => {
+    return new CustomEvent(eventName, {
+      detail: needDetail ? this.generateDetail() : null,
+    });
+  };
+
+  private generateDetail = () => {
+    return {
+      wallet: this.walletService.getWallet(),
+      network: this.networkService.getNetwork(),
+    };
   };
 
   disconnect = async () => {
     this.isAuthenticated.value = false;
     this.modal.clearCachedProvider();
-    window.dispatchEvent(await this.generateDisconnectEvent())
+    window.dispatchEvent(
+      await this.generateEventDetail(EVENTS.DISCONNECTED, false)
+    );
   };
 }
