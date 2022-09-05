@@ -10,7 +10,7 @@ export interface IWallet {
 }
 export interface INetwork {
   name: string;
-  token: string;
+  symbol: string;
   valid: boolean;
 }
 
