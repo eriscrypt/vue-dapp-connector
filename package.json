@@ -1,5 +1,5 @@
 {
-  "name": "eriscrypt-connector-plugin",
+  "name": "vue-dapp",
   "version": "2.2.5",
   "description": "Connect WEB3 providers for any apps",
   "main": "dist/index.js",
