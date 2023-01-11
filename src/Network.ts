@@ -7,6 +7,8 @@ export default class Network {
 
   constructor(private readonly provider: any) {
     this.id = +this.provider.provider.chainId;
+    console.log(this.id);
+
     this.getChainById();
   }
 
