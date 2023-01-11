@@ -40,6 +40,16 @@ export const CHAINS = {
     name: "Polygon",
     symbol: "MATIC",
   },
+  ARBITRUM: {
+    id: 42161,
+    name: "Arbitrum",
+    symbol: "ETH",
+  },
+  AVALANCHE: {
+    id: 43114,
+    name: "Avalanche",
+    symbol: "AVAX",
+  },
 };
 
 export interface ConnectorResponse {
@@ -60,9 +70,12 @@ export default {
     options: {
       infuraId: INFURA_ID,
       rpc: {
-        56: "https://bsc-dataseed.binance.org/",
-        250: "https://rpcapi.fantom.network/",
-        137: "https://rpc-mainnet.matic.network/",
+        1: "https://rpc.ankr.com/eth",
+        56: "https://rpc.ankr.com/bsc",
+        250: "https://rpc.ankr.com/fantom",
+        137: "https://rpc.ankr.com/polygon",
+        43114: "https://rpc.ankr.com/avalanche",
+        42161: "https://rpc.ankr.com/arbitrum",
       },
     },
   },

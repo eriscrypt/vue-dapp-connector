@@ -82,7 +82,7 @@ export class Connector {
     this.provider = await this.getProvider();
     this.walletService = new Wallet(this.provider);
     this.networkService = new Network(this.provider);
-    await this.walletService.requestBalance();
+    return await this.walletService.requestBalance();
   };
 
   public update = async () => {
@@ -113,7 +113,7 @@ export class Connector {
   disconnect = async () => {
     this.isAuthenticated.value = false;
     this.modal.clearCachedProvider();
-    window.dispatchEvent(
+    return window.dispatchEvent(
       await this.generateEventDetail(EVENTS.DISCONNECTED, false)
     );
   };

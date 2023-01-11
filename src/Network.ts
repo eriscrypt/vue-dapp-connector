@@ -34,6 +34,14 @@ export default class Network {
       this.update(CHAINS.POLYGON);
     }
 
+    if (this.id === CHAINS.AVALANCHE.id) {
+      this.update(CHAINS.AVALANCHE);
+    }
+
+    if (this.id === CHAINS.ARBITRUM.id) {
+      this.update(CHAINS.ARBITRUM);
+    }
+
     return;
   }
 
