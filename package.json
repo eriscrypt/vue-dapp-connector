@@ -1,6 +1,6 @@
 {
   "name": "vue-dapp-connector",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "description": "Connect WEB3 providers for any apps",
   "main": "dist/index.js",
   "files": [

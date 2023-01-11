@@ -31,7 +31,7 @@ export class Connector {
     });
   }
 
-  authenticate = async (): Promise<ConnectorResponse | null> => {
+  authenticate = async () => {
     if (this.modal.cachedProvider) return await this.connect();
     return null;
   };
@@ -43,9 +43,7 @@ export class Connector {
     await this.init();
     this.registerEvents();
 
-    return new Promise((resolve) => {
-      resolve(this.generateDetail());
-    });
+    return this.generateDetail();
   };
 
   on = (event: EVENTS | string, callback: (e: ConnectorResponse) => void) => {
@@ -57,7 +55,7 @@ export class Connector {
   private registerEvents = () => {
     this.provider.provider.on("chainChanged", async () => {
       await this.update();
-      window.dispatchEvent(
+      return window.dispatchEvent(
         await this.generateEventDetail(EVENTS.CHAIN_CHANGED)
       );
     });
