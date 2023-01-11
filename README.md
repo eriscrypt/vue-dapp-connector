@@ -1,11 +1,13 @@
 # Vue Web3 Modal
+
 #### Connect any VUE application to any Web3 provider! 🤓
 
 ## Vue3 / Typescript / Pinia Usage
+
 ```typescript
 import { createApp } from "vue";
 import App from "./App.vue";
-import { Connector, EVENTS } from "eriscrypt-connector-plugin";
+import { Connector, EVENTS } from "vue-dapp-connector";
 
 const app = createApp(App);
 const connector = new Connector();
@@ -35,60 +37,67 @@ connector.on("disconnected", () => {
 connector.on(EVENTS.UPDATED, (data) => {
   console.log("updated");
 });
-
 ```
 
 ## Types
+
 ```typescript
-import { ConnectorResponse, IWallet, INetwork } from "eriscrypt-connector-plugin/dist/types";
+import {
+  ConnectorResponse,
+  IWallet,
+  INetwork,
+} from "vue-dapp-connector/dist/types";
 ```
 
 ## Events
 
 ```typescript
-import { Connector, EVENTS } from "eriscrypt-connector-plugin";
-import { ConnectorResponse } from 'eriscrypt-connector-plugin/dist/types'
+import { Connector, EVENTS } from "vue-dapp-connector";
+import { ConnectorResponse } from "vue-dapp-connector/dist/types";
 
 const connector = new Connector();
 
 connector.on(EVENTS.CHAIN_CHANGED, (data: ConnectorResponse) => {
   // user change network hook
-})
+});
 
 connector.on(EVENTS.ACCOUNTS_CHANGED, (data: ConnectorResponse) => {
   // user change account hook
-})
+});
 
 connector.on(EVENTS.DISCONNECTED, () => {
   // user disconnected / logout from all accounts
-})
+});
 
 connector.on(EVENTS.UPDATED, (data: ConnectorResponse) => {
   /**
    * user update hook
    * use this if you manually call 'update' function
    */
-})
+});
 ```
 
 ## Chains / Networks
+
 ```typescript
-import { CHAINS } from 'eriscrypt-connector-plugin/dist/types';
+import { CHAINS } from "vue-dapp-connector/dist/types";
 
 /**
  * Supported chains
- * 
+ *
  * ETH - Ethereum Mainnet
  * BSC - Binance Smart Chain
  * FTM - Fantom Opera
  * Polygon - Polygon Mainnet
  * Rinkeby - Rinkeby Testnet
- * 
+ *
  */
 ```
 
 ## For Electron.js framework
+
 ### Need: install `@esbuild-plugins/node-globals-polyfill`
+
 ### Configure: `vite.types.ts`
 
 ## Happy Coding 🙌
