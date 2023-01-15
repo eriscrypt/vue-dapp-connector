@@ -6,8 +6,7 @@ class Network {
         this.provider = provider;
         this.name = "";
         this.symbol = "";
-        this.id = +this.provider.provider.chainId;
-        console.log(this.id);
+        this.id = Number(this.provider.provider.chainId);
         this.getChainById();
     }
     getChainById() {
