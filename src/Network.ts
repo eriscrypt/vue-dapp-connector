@@ -1,7 +1,7 @@
 import { CHAINS } from "./types";
 
 export default class Network {
-  private readonly id: string | number;
+  public id: string | number;
   public name: string = "";
   public symbol: string = "";
 
@@ -46,12 +46,14 @@ export default class Network {
   }
 
   private update(chain: any) {
+    this.id = chain.id;
     this.name = chain.name;
     this.symbol = chain.symbol;
   }
 
   public getNetwork() {
     return {
+      id: this.id,
       name: this.name,
       symbol: this.symbol,
     };
