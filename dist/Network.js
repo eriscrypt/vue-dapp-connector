@@ -37,11 +37,13 @@ class Network {
         return;
     }
     update(chain) {
+        this.id = chain.id;
         this.name = chain.name;
         this.symbol = chain.symbol;
     }
     getNetwork() {
         return {
+            id: this.id,
             name: this.name,
             symbol: this.symbol,
         };

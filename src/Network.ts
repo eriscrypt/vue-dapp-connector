@@ -52,14 +52,10 @@ export default class Network {
   }
 
   public getNetwork() {
-    const data = {
+    return {
       id: this.id,
       name: this.name,
       symbol: this.symbol,
     };
-
-    console.log(data);
-
-    return data;
   }
 }
