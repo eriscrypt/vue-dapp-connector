@@ -9,6 +9,7 @@ export interface IWallet {
   balance: string;
 }
 export interface INetwork {
+  id: number;
   name: string;
   symbol: string;
   valid: boolean;
