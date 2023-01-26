@@ -72,12 +72,12 @@ export class Connector {
     });
 
     this.provider.provider.on("disconnect", async () => {
-      return await this.disconnect();
+      // return await this.disconnect();
     });
   };
 
   private init = async () => {
-    this.provider = await this.getProvider();
+    this.provider = this.getProvider();
     this.walletService = new Wallet(this.provider);
     this.networkService = new Network(this.provider);
     return await this.walletService.requestBalance();

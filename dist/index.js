@@ -58,11 +58,11 @@ class Connector {
                 }
             }));
             this.provider.provider.on("disconnect", () => __awaiter(this, void 0, void 0, function* () {
-                return yield this.disconnect();
+                // return await this.disconnect();
             }));
         };
         this.init = () => __awaiter(this, void 0, void 0, function* () {
-            this.provider = yield this.getProvider();
+            this.provider = this.getProvider();
             this.walletService = new Wallet_1.default(this.provider);
             this.networkService = new Network_1.default(this.provider);
             return yield this.walletService.requestBalance();

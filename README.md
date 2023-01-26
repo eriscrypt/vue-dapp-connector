@@ -89,7 +89,8 @@ import { CHAINS } from "vue-dapp-connector/dist/types";
  * BSC - Binance Smart Chain
  * FTM - Fantom Opera
  * Polygon - Polygon Mainnet
- * Rinkeby - Rinkeby Testnet
+ * Avalance - Avalanche Network
+ * Arbitrum - Arbitrum One
  *
  */
 ```
@@ -99,5 +100,16 @@ import { CHAINS } from "vue-dapp-connector/dist/types";
 ### Need: install `@esbuild-plugins/node-globals-polyfill`
 
 ### Configure: `vite.types.ts`
+
+```typescript
+export default defineConfig({
+  plugins: [vue({})],
+  define: {
+    global: "window",
+    "process.env": {},
+  },
+  // other config options
+});
+```
 
 ## Happy Coding 🙌
