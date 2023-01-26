@@ -95,11 +95,7 @@ import { CHAINS } from "vue-dapp-connector/dist/types";
  */
 ```
 
-## For Electron.js framework
-
-### Need: install `@esbuild-plugins/node-globals-polyfill`
-
-### Configure: `vite.types.ts`
+## Configure: `vite.types.ts` (optional)
 
 ```typescript
 export default defineConfig({
@@ -111,5 +107,9 @@ export default defineConfig({
   // other config options
 });
 ```
+
+## For Electron.js framework
+
+### Need: install `@esbuild-plugins/node-globals-polyfill`
 
 ## Happy Coding 🙌
